@@ -1,0 +1,2 @@
+# EditorSceneManger
+ UnityEditorSceneManger

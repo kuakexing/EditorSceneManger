@@ -1,0 +1,7 @@
+C:\yf\project\Test\Test2\FrameWork\KuFrameWork\Assets\Script\FrameWork\Editor\EditorSceneManager\EditorSceneManger.dll
+C:\yf\project\Test\Test2\FrameWork\KuFrameWork\Assets\Script\FrameWork\Editor\EditorSceneManager\EditorSceneManger.pdb
+C:\yf\project\Test\Test2\FrameWork\EditorSceneManger\EditorSceneManger\obj\Debug\EditorSceneManger.csprojAssemblyReference.cache
+C:\yf\project\Test\Test2\FrameWork\EditorSceneManger\EditorSceneManger\obj\Debug\EditorSceneManger.csproj.CoreCompileInputs.cache
+C:\yf\project\Test\Test2\FrameWork\EditorSceneManger\EditorSceneManger\obj\Debug\EditorSceneManger.csproj.CopyComplete
+C:\yf\project\Test\Test2\FrameWork\EditorSceneManger\EditorSceneManger\obj\Debug\EditorSceneManger.dll
+C:\yf\project\Test\Test2\FrameWork\EditorSceneManger\EditorSceneManger\obj\Debug\EditorSceneManger.pdb
