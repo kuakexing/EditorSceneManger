@@ -9,7 +9,6 @@ namespace KuFramework.EditorTools
         private bool groupEnabled;
         private bool myBool = true;
         private float myFloat = 1.23f;
-        private string notification = "This is a Notification";
         private Texture texture;
 
         private static IEditorScenePanel ScenePanel = new EditorScenePanel();
