@@ -14,7 +14,7 @@ namespace KuFramework.EditorTools
         private static IEditorScenePanel ScenePanel = new EditorScenePanel();
         public static List<SceneInfo> mSceneInfoList = new List<SceneInfo>();
         private static Vector2 mPos;
-        [MenuItem("Tools/ScenesManager _1")]
+        [MenuItem("Tools/ScenesManager %`")]
         private static void ShowSceneManagerPanel()
         {
             EditorWindow window = GetWindow(typeof(KuEditorSceneManager), false, "EditorSceneManager", true);
