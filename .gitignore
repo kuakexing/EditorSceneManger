@@ -4,3 +4,4 @@ Properties/
 *.csproj
 *.csproj
 *..gitattributess
+*.pdb

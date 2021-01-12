@@ -12,6 +12,9 @@ namespace KuFramework.EditorTools
         List<SceneInfo> GetSceneInfo();
         void OpenScene(string path);
         void DeleteScene(string path);
+        void AddSceneToBuildList(string path);
+        void OpenBuildSettingPanel();
+        void OpenInDirectory(string path, string sceneName);
     }
     internal class EditorScenePanel : IEditorScenePanel
     {
@@ -29,7 +32,8 @@ namespace KuFramework.EditorTools
                 string scenePath = AssetDatabase.GUIDToAssetPath(sceneGuid);
                 string sceneName = Path.GetFileNameWithoutExtension(scenePath);
                 FileInfo fileinfo = new FileInfo(Application.dataPath + "/" + scenePath.Replace("Assets/", ""));
-                sceneinfolist.Add(new SceneInfo(sceneName, scenePath, curscenename.Equals(sceneName)));
+                double size = Math.Ceiling(fileinfo.Length / 1024.0);
+                sceneinfolist.Add(new SceneInfo(sceneName, scenePath, curscenename.Equals(sceneName), size));
             }
             sceneinfolist.Sort();
             return sceneinfolist;
@@ -61,18 +65,50 @@ namespace KuFramework.EditorTools
             else Debug.Log("cancel");
         }
 
+        public void AddSceneToBuildList(string path)
+        {
+            if (IsInBuildList(path))
+                return;
+            EditorBuildSettingsScene[] buildscenearray = EditorBuildSettings.scenes;
+            List<EditorBuildSettingsScene> buildscenelist = new List<EditorBuildSettingsScene>(buildscenearray)
+            {
+                new EditorBuildSettingsScene(path, true)
+            };
+            EditorBuildSettings.scenes = buildscenelist.ToArray();
+        }
+        public void OpenBuildSettingPanel()
+        {
+            EditorWindow.GetWindow<BuildPlayerWindow>();
+        }
+        private bool IsInBuildList(string path)
+        {
+            for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+            {
+                if (EditorBuildSettings.scenes[i].path.Equals(path))
+                    return true;
+            }
+            return false;
+        }
+        public void OpenInDirectory(string path, string sceneName)
+        {
+            string dir = Application.dataPath.Replace("Assets", "") + path;
+            //Debug.Log(dir);
+            EditorUtility.RevealInFinder(dir);
+        }
     }
     internal class SceneInfo : IComparable<SceneInfo>
     {
         public readonly string sceneName;
         public readonly string scenePath;
+        public readonly double sceneSize;
         public readonly bool isActive;
 
-        public SceneInfo(string sceneName, string scenePath, bool isActive)
+        public SceneInfo(string sceneName, string scenePath, bool isActive, double sceneSize)
         {
             this.sceneName = sceneName;
             this.scenePath = scenePath;
             this.isActive = isActive;
+            this.sceneSize = sceneSize;
         }
         public int CompareTo(SceneInfo other)
         {

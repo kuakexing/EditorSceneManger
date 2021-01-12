@@ -20,39 +20,57 @@ namespace KuFramework.EditorTools
         private static void ShowSceneManagerPanel()
         {
             EditorWindow window = GetWindow(typeof(KuEditorSceneManager), false, "EditorSceneManager", true);
-            window.position = new Rect(Screen.width / 2, Screen.height / 2, 500, 500);
+            window.position = new Rect(Screen.width / 2, Screen.height / 2, 600, 500);
             window.Show();
             mSceneInfoList = mScenePanel.GetSceneInfo();
         }
         private void OnGUI()
         {
+            UpdateInfoList();
+            ShowScrollSceneInfo();
+            ShowFixedButton();
+        }
+
+        private static void ShowFixedButton()
+        {
+            if (GUILayout.Button("Open Build Settings"))
+                mScenePanel.OpenBuildSettingPanel();
+        }
+
+        private static void UpdateInfoList()
+        {
             if (mSceneInfoList.Count == 0)
                 mSceneInfoList = mScenePanel.GetSceneInfo();
-            mPos = EditorGUILayout.BeginScrollView(mPos);
-            ShowSceneInfo();
-            EditorGUILayout.EndScrollView();
-            //UnityEngine.Debug.Log(UnityEditor.SceneManagement.StageUtility.GetCurrentStageHandle().ToString());
         }
-        private void ShowSceneInfo()
+
+        private void ShowScrollSceneInfo()
         {
+            mPos = EditorGUILayout.BeginScrollView(mPos);
             for (int i = 0; i < mSceneInfoList.Count; i++)
             {
                 ShowSingleSceneInfo(i);
             }
+            EditorGUILayout.EndScrollView();
+            //UnityEngine.Debug.Log(UnityEditor.SceneManagement.StageUtility.GetCurrentStageHandle().ToString());
         }
 
         private static void ShowSingleSceneInfo(int i)
         {
             GUILayout.Label(string.Format("{0}.{1}", (i + 1).ToString(), mSceneInfoList[i].sceneName), EditorStyles.boldLabel);
+            GUILayout.Label(string.Format("active ： {1}\t\tsize : {0}KB", mSceneInfoList[i].sceneSize, (mSceneInfoList[i].isActive ? "true" : "false")));
             GUILayout.Label("path : " + mSceneInfoList[i].scenePath);
-            GUILayout.Label("active ： " + (mSceneInfoList[i].isActive ? "true" : "false"));
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("open"))
+            if (GUILayout.Button("Open"))
                 mScenePanel.OpenScene(mSceneInfoList[i].scenePath);
-            if (GUILayout.Button("delete"))
+            if (GUILayout.Button("Delete"))
                 mScenePanel.DeleteScene(mSceneInfoList[i].scenePath);
+            if (GUILayout.Button("Add To BuildList"))
+                mScenePanel.AddSceneToBuildList(mSceneInfoList[i].scenePath);
+            if (GUILayout.Button("Open In Directory"))
+                mScenePanel.OpenInDirectory(mSceneInfoList[i].scenePath, mSceneInfoList[i].sceneName);
             EditorGUILayout.EndHorizontal();
             GUILayout.Label("");
+            //EditorGUI.ColorField(new Rect(0,0,200,200),"test123" , new Color(1, 1, 1,0.5f));
         }
 
         internal static void UpdatePanel()
